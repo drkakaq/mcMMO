@@ -3,8 +3,6 @@ package com.gmail.nossr50.skills.repair;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -19,6 +17,7 @@ import com.gmail.nossr50.events.skills.repair.McMMOPlayerRepairCheckEvent;
 import com.gmail.nossr50.locale.LocaleLoader;
 import com.gmail.nossr50.skills.SkillManager;
 import com.gmail.nossr50.skills.repair.ArcaneForging.Tier;
+import com.gmail.nossr50.skills.salvage.Salvage;
 import com.gmail.nossr50.util.Misc;
 import com.gmail.nossr50.util.Permissions;
 import com.gmail.nossr50.util.StringUtils;
@@ -29,29 +28,6 @@ import com.gmail.nossr50.util.spout.SpoutUtils;
 public class RepairManager extends SkillManager {
     public RepairManager(McMMOPlayer mcMMOPlayer) {
         super(mcMMOPlayer, SkillType.REPAIR);
-    }
-
-    /**
-     * Handles notifications for placing an anvil.
-     *
-     * @param anvilId The item ID of the anvil block
-     */
-    public void placedAnvilCheck(int anvilId) {
-        Player player = getPlayer();
-
-        if (mcMMOPlayer.getPlacedAnvil(anvilId)) {
-            return;
-        }
-
-        if (mcMMO.isSpoutEnabled()) {
-            SpoutUtils.sendRepairNotifications(player, anvilId);
-        }
-        else {
-            player.sendMessage(Repair.getAnvilMessage(anvilId));
-        }
-
-        player.playSound(player.getLocation(), Sound.ANVIL_LAND, Misc.ANVIL_USE_VOLUME, Misc.ANVIL_USE_PITCH);
-        mcMMOPlayer.togglePlacedAnvil(anvilId);
     }
 
     public void handleRepair(ItemStack item) {
@@ -168,28 +144,6 @@ public class RepairManager extends SkillManager {
         return ((startDurability - newDurability) / (float) totalDurability);
     }
 
-    public void handleSalvage(Location location, ItemStack item) {
-        Player player = getPlayer();
-
-        if (getSkillLevel() < Repair.salvageUnlockLevel) {
-            player.sendMessage(LocaleLoader.getString("Repair.Skills.AdeptSalvage"));
-            return;
-        }
-
-        if (item.getDurability() == 0) {
-            player.setItemInHand(new ItemStack(Material.AIR));
-            location.setY(location.getY() + 1);
-
-            Misc.dropItems(location, new ItemStack(Repair.getSalvagedItem(item)), Repair.getSalvagedAmount(item) * item.getAmount());
-
-            player.playSound(player.getLocation(), Sound.ANVIL_USE, Misc.ANVIL_USE_VOLUME, Misc.ANVIL_USE_PITCH);
-            player.sendMessage(LocaleLoader.getString("Repair.Skills.SalvageSuccess"));
-        }
-        else {
-            player.sendMessage(LocaleLoader.getString("Repair.Skills.NotFullDurability"));
-        }
-    }
-
     /**
      * Check if the player has tried to use an Anvil before.
      *
@@ -214,7 +168,7 @@ public class RepairManager extends SkillManager {
         if (anvilId == Repair.repairAnvilId) {
             player.sendMessage(LocaleLoader.getString("Skills.ConfirmOrCancel", LocaleLoader.getString("Repair.Pretty.Name")));
         }
-        else if (anvilId == Repair.salvageAnvilId) {
+        else if (anvilId == Salvage.salvageAnvilId) {
             player.sendMessage(LocaleLoader.getString("Skills.ConfirmOrCancel", LocaleLoader.getString("Salvage.Pretty.Name")));
         }
 
@@ -350,6 +304,7 @@ public class RepairManager extends SkillManager {
 
                 if (ArcaneForging.arcaneForgingDowngrades && enchantLevel > 1 && getDowngradeEnchantChance() > Misc.getRandom().nextInt(activationChance)) {
                     item.addEnchantment(enchantment, enchantLevel - 1);
+
                     downgraded = true;
                 }
             }

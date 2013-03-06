@@ -92,6 +92,8 @@ commands:
         description: Detailed mcMMO skill info
     smelting:
         description: Detailed mcMMO skill info
+    salvage:
+        description: Detailed mcMMO skill info
     adminchat:
         aliases: [ac, a]
         description: Toggle Admin chat or send admin chat messages
@@ -148,6 +150,7 @@ permissions:
             mcmmo.ability.herbalism.all: true
             mcmmo.ability.mining.all: true
             mcmmo.ability.repair.all: true
+            mcmmo.ability.salvage.all: true
             mcmmo.ability.smelting.all: true
             mcmmo.ability.swords.all: true
             mcmmo.ability.taming.all: true
@@ -472,6 +475,20 @@ permissions:
         description: Allows ability to repair tools
     mcmmo.ability.repair.woodrepair:
         description: Allows ability to repair Wood tools
+    mcmmo.ability.salvage.*:
+        default: false
+        description: Allows access to all Salvage abilities
+        children:
+            mcmmo.ability.salvage.all: true
+    mcmmo.ability.salvage.all:
+        description: Allows access to all Smelting abilities
+        children:
+            mcmmo.ability.salvage.advancedsalvage: true
+            mcmmo.ability.salvage.arcanesalvage: true
+    mcmmo.ability.salvage.advancedsalvage:
+        description: Allows access to the Advanced Salvage ability
+    mcmmo.ability.salvage.arcanesalvage:
+        description: Allows access to the Arcane Salvage ability
     mcmmo.ability.smelting.*:
         default: false
         description: Allows access to all Smelting abilities
@@ -688,6 +705,7 @@ permissions:
             mcmmo.commands.party.all: true
             mcmmo.commands.ptp.all: true
             mcmmo.commands.repair: true
+            mcmmo.commands.salvage: true
             mcmmo.commands.smelting: true
             mcmmo.commands.swords: true
             mcmmo.commands.taming: true
@@ -870,6 +888,7 @@ permissions:
             mcmmo.commands.mctop.herbalism: true
             mcmmo.commands.mctop.mining: true
             mcmmo.commands.mctop.repair: true
+            mcmmo.commands.mctop.salvage: true
             mcmmo.commands.mctop.smelting: true
             mcmmo.commands.mctop.swords: true
             mcmmo.commands.mctop.taming: true
@@ -893,6 +912,8 @@ permissions:
         description: Allows access to the mctop command for mining
     mcmmo.commands.mctop.repair:
         description: Allows access to the mctop command for repair
+    mcmmo.commands.mctop.salvage:
+        description: Allows access to the mctop command for salvage
     mcmmo.commands.mctop.smelting:
         description: Allows access to the mctop command for smelting
     mcmmo.commands.mctop.swords:
@@ -1037,6 +1058,7 @@ permissions:
             mcmmo.commands.skillreset.mining: true
             mcmmo.commands.skillreset.others.all: true
             mcmmo.commands.skillreset.repair: true
+            mcmmo.commands.skillreset.salvage: true
             mcmmo.commands.skillreset.smelting: true
             mcmmo.commands.skillreset.swords: true
             mcmmo.commands.skillreset.taming: true
@@ -1075,6 +1097,7 @@ permissions:
             mcmmo.commands.skillreset.others.herbalism: true
             mcmmo.commands.skillreset.others.mining: true
             mcmmo.commands.skillreset.others.repair: true
+            mcmmo.commands.skillreset.others.salvage: true
             mcmmo.commands.skillreset.others.smelting: true
             mcmmo.commands.skillreset.others.swords: true
             mcmmo.commands.skillreset.others.taming: true
@@ -1098,6 +1121,8 @@ permissions:
         description: Allows access to the skillreset command for mining for other players
     mcmmo.commands.skillreset.others.repair:
         description: Allows access to the skillreset command for repair for other players
+    mcmmo.commands.skillreset.others.salvage:
+        description: Allows access to the skillreset command for salvage for other players
     mcmmo.commands.skillreset.others.smelting:
         description: Allows access to the skillreset command for smelting for other players
     mcmmo.commands.skillreset.others.swords:
@@ -1110,6 +1135,8 @@ permissions:
         description: Allows access to the skillreset command for woodcutting for other players
     mcmmo.commands.skillreset.repair:
         description: Allows access to the skillreset command for repair
+    mcmmo.commands.skillreset.salvage:
+        description: Allows access to the skillreset command for smelting
     mcmmo.commands.skillreset.smelting:
         description: Allows access to the skillreset command for smelting
     mcmmo.commands.skillreset.swords:
@@ -1120,6 +1147,8 @@ permissions:
         description: Allows access to the skillreset command for unarmed
     mcmmo.commands.skillreset.woodcutting:
         description: Allows access to the skillreset command for woodcutting
+    mcmmo.commands.salvage:
+        description: Allows access to the salvage command
     mcmmo.commands.smelting:
         description: Allows access to the smelting command
     mcmmo.commands.swords:
@@ -1164,6 +1193,7 @@ permissions:
             mcmmo.commands.xplock.herbalism: true
             mcmmo.commands.xplock.mining: true
             mcmmo.commands.xplock.repair: true
+            mcmmo.commands.xplock.salvage: true
             mcmmo.commands.xplock.smelting: true
             mcmmo.commands.xplock.swords: true
             mcmmo.commands.xplock.taming: true
@@ -1187,6 +1217,8 @@ permissions:
         description: Allows access to the xplock command for mining
     mcmmo.commands.xplock.repair:
         description: Allows access to the xplock command for repair
+    mcmmo.commands.xplock.salvage:
+        description: Allows access to the xplock command for smelting
     mcmmo.commands.xplock.smelting:
         description: Allows access to the xplock command for smelting
     mcmmo.commands.xplock.swords:
@@ -1331,6 +1363,7 @@ permissions:
             mcmmo.perks.lucky.herbalism: true
             mcmmo.perks.lucky.mining: true
             mcmmo.perks.lucky.repair: true
+            mcmmo.perks.lucky.salvage: true
             mcmmo.perks.lucky.smelting: true
             mcmmo.perks.lucky.swords: true
             mcmmo.perks.lucky.taming: true
@@ -1360,6 +1393,9 @@ permissions:
     mcmmo.perks.lucky.repair:
         default: false
         description: Gives Repair abilities & skills a 33.3% better chance to activate.
+    mcmmo.perks.lucky.salvage:
+        default: false
+        description: Gives Salvage abilities & skills a 33.3% better chance to activate.
     mcmmo.perks.lucky.smelting:
         default: false
         description: Gives Smelting abilities & skills a 33.3% better chance to activate.
@@ -1426,6 +1462,7 @@ permissions:
             mcmmo.skills.herbalism: true
             mcmmo.skills.mining: true
             mcmmo.skills.repair: true
+            mcmmo.skills.salvage: true
             mcmmo.skills.swords: true
             mcmmo.skills.smelting: true
             mcmmo.skills.taming: true
@@ -1479,6 +1516,12 @@ permissions:
             mcmmo.ability.repair.all: true
             mcmmo.commands.repair: true
             mcmmo.commands.xplock.repair: true
+    mcmmo.skills.salvage:
+        description: Allows access to the Salvage skill
+        children:
+            mcmmo.ability.salvage.all: true
+            mcmmo.commands.salvage: true
+            mcmmo.commands.xplock.salvage: true
     mcmmo.skills.smelting:
         description: Allows access to the Smelting skill
         children:

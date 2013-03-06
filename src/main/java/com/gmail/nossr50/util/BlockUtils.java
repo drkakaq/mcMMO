@@ -11,6 +11,7 @@ import org.bukkit.material.CocoaPlant.CocoaPlantSize;
 import org.bukkit.material.NetherWarts;
 
 import com.gmail.nossr50.skills.repair.Repair;
+import com.gmail.nossr50.skills.salvage.Salvage;
 
 public final class BlockUtils {
     private BlockUtils() {}
@@ -314,7 +315,7 @@ public final class BlockUtils {
     public static boolean isMcMMOAnvil(BlockState blockState) {
         int blockId = blockState.getTypeId();
 
-        return blockId == Repair.repairAnvilId || blockId == Repair.salvageAnvilId;
+        return blockId == Repair.repairAnvilId || blockId == Salvage.salvageAnvilId;
     }
 
     /**

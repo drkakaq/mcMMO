@@ -254,9 +254,6 @@ Skills:
         SuperRepair_ChanceMax: 100.0
         SuperRepair_MaxBonusLevel: 1000
 
-        # Salvage_UnlockLevel: Level when Salvage become available
-        Salvage_UnlockLevel: 600
-
         Arcane_Forging:
             May_Lose_Enchants: true
             Rank_Levels:
@@ -277,6 +274,43 @@ Skills:
                     Rank_3: 25
                     Rank_2: 50
                     Rank_1: 75
+    #
+    #  Settings for Salvage
+    ###
+    Salvage:
+        # AdvancedSalvage_UnlockLevel: The level at which Advance Salvage become available
+        AdvancedSalvage_UnlockLevel: 350
+
+        # ArcaneSalvage_EnchantLossEnabled: When salvaging enchanted items, the enchants may be lost
+        # ArcaneSalvage_EnchantDowngradeEnabled: When salvaging enchanted items, the enchants may be downgraded
+        ArcaneSalvage_EnchantLossEnabled: true
+        ArcaneSalvage_EnchantDowngradeEnabled: true
+
+        # ArcaneSalvage_Rank: ArcaneSalvage rank unlocks
+        ArcaneSalvage_Rank1: 200
+        ArcaneSalvage_Rank2: 400
+        ArcaneSalvage_Rank3: 600
+        ArcaneSalvage_Rank4: 800
+        ArcaneSalvage_Rank5: 1000
+
+        # ArcaneSalvage_ExtractFullEnchant: Chance to extract the full enchant at each ArcaneSalvage rank
+        ArcaneSalvage_ExtractFullEnchantRank1: 2.5
+        ArcaneSalvage_ExtractFullEnchantRank2: 10.0
+        ArcaneSalvage_ExtractFullEnchantRank3: 17.5
+        ArcaneSalvage_ExtractFullEnchantRank4: 25.0
+        ArcaneSalvage_ExtractFullEnchantRank5: 32.5
+
+        # ArcaneSalvage_ExtractPartialEnchant: Chance to extract the partial enchant at each ArcaneSalvage rank
+        ArcaneSalvage_ExtractPartialEnchantRank1: 7.5
+        ArcaneSalvage_ExtractPartialEnchantRank2: 10.0
+        ArcaneSalvage_ExtractPartialEnchantRank3: 12.5
+        ArcaneSalvage_ExtractPartialEnchantRank4: 15.0
+        ArcaneSalvage_ExtractPartialEnchantRank5: 17.5
+
+        # Salvage_MaxPercentage: Maximum percent of materials to be returned when Salvaging
+        # Salvage_MaxPercentageLevel: On this level, the Salvage percentage will be Salvage_MaxPercentage
+        Salvage_MaxPercentage: 100.0
+        Salvage_MaxPercentageLevel: 1000
     #
     #  Settings for Smelting
     ###

@@ -41,6 +41,7 @@ import com.gmail.nossr50.commands.skills.FishingCommand;
 import com.gmail.nossr50.commands.skills.HerbalismCommand;
 import com.gmail.nossr50.commands.skills.MiningCommand;
 import com.gmail.nossr50.commands.skills.RepairCommand;
+import com.gmail.nossr50.commands.skills.SalvageCommand;
 import com.gmail.nossr50.commands.skills.SmeltingCommand;
 import com.gmail.nossr50.commands.skills.SwordsCommand;
 import com.gmail.nossr50.commands.skills.TamingCommand;
@@ -104,6 +105,10 @@ public final class CommandRegistrationManager {
 
                 case REPAIR:
                     command.setExecutor(new RepairCommand());
+                    break;
+
+                case SALVAGE:
+                    command.setExecutor(new SalvageCommand());
                     break;
 
                 case SMELTING:

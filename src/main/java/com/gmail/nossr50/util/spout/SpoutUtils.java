@@ -448,18 +448,6 @@ public class SpoutUtils {
         }
     }
 
-    public static void sendRepairNotifications(Player player, int anvilId) {
-        SpoutPlayer spoutPlayer = SpoutManager.getPlayer(player);
-
-        if (spoutPlayer.isSpoutCraftEnabled()) {
-            String[] spoutMessages = Repair.getSpoutAnvilMessages(anvilId);
-            spoutPlayer.sendNotification(spoutMessages[0], spoutMessages[1], Material.getMaterial(anvilId));
-        }
-        else {
-            player.sendMessage(Repair.getAnvilMessage(anvilId));
-        }
-    }
-
     public static void sendDonationNotification(Player player) {
         SpoutPlayer spoutPlayer = SpoutManager.getPlayer(player);
 

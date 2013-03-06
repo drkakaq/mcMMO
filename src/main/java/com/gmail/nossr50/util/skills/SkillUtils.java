@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -31,6 +32,8 @@ import com.gmail.nossr50.locale.LocaleLoader;
 import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.runnables.skills.AbilityDisableTask;
 import com.gmail.nossr50.runnables.skills.ToolLowerTask;
+import com.gmail.nossr50.skills.repair.Repair;
+import com.gmail.nossr50.skills.salvage.Salvage;
 import com.gmail.nossr50.util.ItemUtils;
 import com.gmail.nossr50.util.Misc;
 import com.gmail.nossr50.util.ModUtils;
@@ -38,8 +41,43 @@ import com.gmail.nossr50.util.Permissions;
 import com.gmail.nossr50.util.StringUtils;
 import com.gmail.nossr50.util.player.UserManager;
 import com.gmail.nossr50.util.spout.SpoutUtils;
+import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SkillUtils {
+    private static int enchantBuff = AdvancedConfig.getInstance().getEnchantBuff();
+
+    /**
+     * Handles notifications for placing an anvil.
+     *
+     * @param anvilId The item ID of the anvil block
+     */
+    public static void placedAnvilCheck(Player player, int anvilId) {
+        McMMOPlayer mcMMOPlayer = UserManager.getPlayer(player);
+    
+        if (mcMMOPlayer.getPlacedAnvil(anvilId)) {
+            return;
+        }
+    
+        if (mcMMO.isSpoutEnabled()) {
+            SpoutPlayer spoutPlayer = SpoutManager.getPlayer(player);
+    
+            if (spoutPlayer.isSpoutCraftEnabled()) {
+                String[] spoutMessages = getSpoutAnvilMessages(anvilId);
+                spoutPlayer.sendNotification(spoutMessages[0], spoutMessages[1], Material.getMaterial(anvilId));
+            }
+            else {
+                player.sendMessage(getAnvilMessage(anvilId));
+            }
+        }
+        else {
+            player.sendMessage(getAnvilMessage(anvilId));
+        }
+    
+        player.playSound(player.getLocation(), Sound.ANVIL_LAND, Misc.ANVIL_USE_VOLUME, Misc.ANVIL_USE_PITCH);
+        mcMMOPlayer.togglePlacedAnvil(anvilId);
+    }
+
     public static int handleFoodSkills(Player player, SkillType skill, int eventFoodLevel, int baseLevel, int maxLevel, int rankChange) {
         int skillLevel = UserManager.getPlayer(player).getProfile().getSkillLevel(skill);
 
@@ -499,5 +537,29 @@ public class SkillUtils {
 
     public static boolean treasureDropSuccessful(double dropChance, int activationChance) {
         return dropChance > Misc.getRandom().nextDouble() * activationChance;
+    }
+
+    private static String[] getSpoutAnvilMessages(int blockId) {
+        if (blockId == Repair.repairAnvilId) {
+            return new String[] {LocaleLoader.getString("Repair.AnvilPlaced.Spout1"), LocaleLoader.getString("Repair.AnvilPlaced.Spout2")};
+        }
+
+        if (blockId == Salvage.salvageAnvilId) {
+            return new String[] {"[mcMMO] Anvil Placed", "Right click to salvage!"};
+        }
+
+        return new String[] {"", ""};
+    }
+
+    private static String getAnvilMessage(int blockId) {
+        if (blockId == Repair.repairAnvilId) {
+            return LocaleLoader.getString("Repair.Listener.Anvil");
+        }
+
+        if (blockId == Salvage.salvageAnvilId) {
+            return LocaleLoader.getString("Salvage.Listener.Anvil");
+        }
+
+        return "";
     }
 }

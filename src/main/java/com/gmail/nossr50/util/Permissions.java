@@ -169,7 +169,6 @@ public final class Permissions {
     /* REPAIR */
     public static boolean arcaneForging(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.arcaneforging"); }
     public static boolean repairMastery(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.repairmastery"); }
-    public static boolean salvage(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.salvage"); }
     public static boolean superRepair(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.repairbonus"); }
 
     public static boolean repairArmor(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.armorrepair"); }
@@ -184,6 +183,10 @@ public final class Permissions {
     public static boolean repairString(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.stringrepair"); }
     public static boolean repairStone(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.stonerepair"); }
     public static boolean repairWood(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.repair.woodrepair"); }
+
+    /* SALVAGE */
+    public static boolean advancedSalvage(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.salvage.advancedsalvage"); }
+    public static boolean arcaneSalvage(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.salvage.arcanesalvage"); }
 
     /* SMELTING */
     public static boolean fluxMining(Permissible permissible) { return permissible.hasPermission("mcmmo.ability.smelting.fluxmining"); }
