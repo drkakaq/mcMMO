@@ -528,6 +528,7 @@ public class McMMOPlayer {
         }
 
         profile.setSkillXpLevel(skillType, profile.getSkillXpLevelRaw(skillType) + event.getRawXpGained());
+        profile.registeredXpGain(skillType, event.getRawXpGained());
 
         McMMOHud spoutHud = profile.getSpoutHud();
 
