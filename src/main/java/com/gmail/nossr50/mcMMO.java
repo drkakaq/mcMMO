@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import com.gmail.nossr50.util.experience.FormulaManager;
+
 import net.shatteredlands.shatt.backup.ZipLibrary;
 
 import org.bukkit.entity.Player;
@@ -106,6 +108,14 @@ public class mcMMO extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
+            final String impName = this.getServer().getName();
+            if (impName.equals("CraftBukkit")) {
+                final String impVersion = this.getServer().getVersion();
+                if (!impVersion.startsWith("git-Bukkit")) {
+                    this.getLogger().warning("Inconsistency found: Potential mod detected.");
+                    this.getLogger().log(Level.WARNING, "Report this to the mod author ASAP", new ModAuthorNagException("Mod claims to be \"CraftBukkit\" but is not. Report this error to the mod author so they can fix it ASAP.\nFound \"CraftBukkit\" \"" + impVersion + "\""));
+                }
+            }
             p = this;
             getLogger().setFilter(new LogFilter(this));
             metadataValue = new FixedMetadataValue(this, true);
@@ -382,6 +392,13 @@ public class mcMMO extends JavaPlugin {
         }
         else if (kickIntervalTicks > 0) {
             new PartyAutoKickTask().runTaskTimer(this, kickIntervalTicks, kickIntervalTicks);
+        }
+    }
+
+    @SuppressWarnings("serial")
+    public class ModAuthorNagException extends RuntimeException {
+        public ModAuthorNagException(String nagMessage) {
+            super(nagMessage);
         }
     }
 }
