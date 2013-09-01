@@ -108,14 +108,6 @@ public class mcMMO extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
-            final String impName = this.getServer().getName();
-            if (impName.equals("CraftBukkit")) {
-                final String impVersion = this.getServer().getVersion();
-                if (!impVersion.startsWith("git-Bukkit")) {
-                    this.getLogger().warning("Inconsistency found: Potential mod detected.");
-                    this.getLogger().log(Level.WARNING, "Report this to the mod author ASAP", new ModAuthorNagException("Mod claims to be \"CraftBukkit\" but is not. Report this error to the mod author so they can fix it ASAP.\nFound \"CraftBukkit\" \"" + impVersion + "\""));
-                }
-            }
             p = this;
             getLogger().setFilter(new LogFilter(this));
             metadataValue = new FixedMetadataValue(this, true);
@@ -126,6 +118,19 @@ public class mcMMO extends JavaPlugin {
 
             if (!noErrorsInConfigFiles) {
                 return;
+            }
+
+            final String impName = this.getServer().getName();
+            if (impName.equals("CraftBukkit")) {
+                final String impVersion = this.getServer().getVersion();
+                if (!impVersion.startsWith("git-Bukkit")) {
+                    this.getLogger().warning("Inconsistency found: Potential mod detected.");
+                    this.getLogger().log(Level.WARNING, "Report this to the mod author ASAP", new ModAuthorNagException("Mod claims to be \"CraftBukkit\" but is not. Report this error to the mod author so they can fix it ASAP.\nFound \"CraftBukkit\" \"" + impVersion + "\""));
+                }
+            } else if (impName.equals("MCPC+")) {
+                if (!(Config.getInstance().getToolModsEnabled() || Config.getInstance().getArmorModsEnabled() || Config.getInstance().getEntityModsEnabled() || Config.getInstance().getBlockModsEnabled())) {
+                    this.getLogger().info("MCPC+ implementation found, but all custom mod configs for mcMMO are disabled.");
+                }
             }
 
             combatTagEnabled = getServer().getPluginManager().getPlugin("CombatTag") != null;
