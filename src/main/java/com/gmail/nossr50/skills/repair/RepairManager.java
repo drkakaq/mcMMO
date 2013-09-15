@@ -35,7 +35,7 @@ public class RepairManager extends SkillManager {
     /**
      * Handles notifications for placing an anvil.
      *
-     * @param anvilId The item ID of the anvil block
+     * @param anvilType The {@link Material} of the anvil block
      */
     public void placedAnvilCheck(Material anvilType) {
         Player player = getPlayer();
@@ -194,6 +194,9 @@ public class RepairManager extends SkillManager {
     /**
      * Check if the player has tried to use an Anvil before.
      *
+     * @param anvilType The {@link Material} of the anvil block
+     * @param actualize determines if last anvil use should be actualized
+     *
      * @return true if the player has confirmed using an Anvil
      */
     public boolean checkConfirmation(Material anvilType, boolean actualize) {
@@ -316,7 +319,7 @@ public class RepairManager extends SkillManager {
     /**
      * Handles removing & downgrading enchants.
      *
-     * @param item Item being repaired
+     * @param item {@link ItemStack} being repaired
      */
     private void addEnchants(ItemStack item) {
         Player player = getPlayer();
