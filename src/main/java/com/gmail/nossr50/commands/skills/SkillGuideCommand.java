@@ -20,7 +20,7 @@ public class SkillGuideCommand implements CommandExecutor {
 
     public SkillGuideCommand(SkillType skillType) {
         header = LocaleLoader.getString("Guides.Header", SkillUtils.getSkillName(skillType));
-        guide = getFullGuide(skillType);
+        guide = getGuide(skillType);
 
         invalidPage = LocaleLoader.getString("Guides.Page.Invalid");
     }
@@ -89,8 +89,8 @@ public class SkillGuideCommand implements CommandExecutor {
         return allStrings;
     }
 
-    private ArrayList<String> getFullGuide(SkillType skillType) {
-        ArrayList<String> fullGuide = new ArrayList<String>();
+    private ArrayList<String> getGuide(SkillType skillType) {
+        ArrayList<String> guide = new ArrayList<String>();
 
         for (int i = 0; i < 10; i++) {
             String[] section = LocaleLoader.getString("Guides." + StringUtils.getCapitalized(skillType.toString()) + ".Section." + i).split("\n");
@@ -99,16 +99,16 @@ public class SkillGuideCommand implements CommandExecutor {
                 break;
             }
 
-            fullGuide.addAll(Arrays.asList(section));
+            guide.addAll(Arrays.asList(section));
 
             if (section.length < 8) {
                 for (int blankLine = 8 - section.length; blankLine > 0; blankLine--) {
-                    fullGuide.add("");
+                    guide.add("");
                 }
 
             }
         }
 
-        return fullGuide;
+        return guide;
     }
 }
