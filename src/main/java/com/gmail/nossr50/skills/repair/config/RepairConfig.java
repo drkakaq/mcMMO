@@ -137,7 +137,7 @@ public class RepairConfig extends ConfigLoader {
             int minimumQuantity = (itemMaterial != null && repairMaterial != null ? Repair.getRepairAndSalvageQuantities(new ItemStack(itemMaterial), repairMaterial, repairMetadata) : config.getInt("Repairables." + key + ".MinimumQuantity"));
 
             if (minimumQuantity <= 0 && itemMaterial != null) {
-                minimumQuantity = Repair.getRepairAndSalvageQuantities(new ItemStack(itemMaterial));
+                minimumQuantity = Repair.getMaterialCount(new ItemStack(itemMaterial));
             }
 
             if (minimumQuantity <= 0) {
