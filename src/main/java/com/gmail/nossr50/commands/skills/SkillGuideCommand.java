@@ -14,15 +14,13 @@ import com.gmail.nossr50.util.skills.SkillUtils;
 
 public class SkillGuideCommand implements CommandExecutor {
     private String header;
-    private String[] guide;
-    private ArrayList<String> fullGuide;
+    private ArrayList<String> guide;
 
     private String invalidPage;
 
     public SkillGuideCommand(SkillType skillType) {
         header = LocaleLoader.getString("Guides.Header", SkillUtils.getSkillName(skillType));
-        fullGuide = getFullGuide(skillType);
-        guide = fullGuide.toArray(new String[fullGuide.size()]);
+        guide = getFullGuide(skillType);
 
         invalidPage = LocaleLoader.getString("Guides.Page.Invalid");
     }
@@ -62,7 +60,7 @@ public class SkillGuideCommand implements CommandExecutor {
     }
 
     private int getTotalPageNumber() {
-        return (int) Math.ceil(guide.length / 8.0);
+        return (int) Math.ceil(guide.size() / 8.0);
     }
 
     private void sendGuide(CommandSender sender, int pageNumber) {
@@ -79,11 +77,11 @@ public class SkillGuideCommand implements CommandExecutor {
 
         // Add targeted strings
         while (allStrings.size() < 9) {
-            if (pageIndexStart + allStrings.size() > guide.length) {
+            if (pageIndexStart + allStrings.size() > guide.size()) {
                 allStrings.add("");
             }
             else {
-                allStrings.add(guide[pageIndexStart + (allStrings.size() - 1)]);
+                allStrings.add(guide.get(pageIndexStart + (allStrings.size() - 1)));
             }
         }
 
