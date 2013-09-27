@@ -1,6 +1,7 @@
 package com.gmail.nossr50.commands.skills;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,12 +15,14 @@ import com.gmail.nossr50.util.skills.SkillUtils;
 public class SkillGuideCommand implements CommandExecutor {
     private String header;
     private String[] guide;
+    private ArrayList<String> fullGuide;
 
     private String invalidPage;
 
     public SkillGuideCommand(SkillType skillType) {
         header = LocaleLoader.getString("Guides.Header", SkillUtils.getSkillName(skillType));
-        guide = LocaleLoader.getString("Guides." + StringUtils.getCapitalized(skillType.toString())).split("\n");
+        fullGuide = getFullGuide(skillType);
+        guide = fullGuide.toArray(new String[fullGuide.size()]);
 
         invalidPage = LocaleLoader.getString("Guides.Page.Invalid");
     }
@@ -86,5 +89,28 @@ public class SkillGuideCommand implements CommandExecutor {
 
         allStrings.add("Page " + pagenum + " of " + getTotalPageNumber());
         return allStrings;
+    }
+
+    private ArrayList<String> getFullGuide(SkillType skillType) {
+        ArrayList<String> fullGuide = new ArrayList<String>();
+
+        for (int i = 0; i < 10; i++) {
+            String[] section = LocaleLoader.getString("Guides." + StringUtils.getCapitalized(skillType.toString()) + ".Section." + i).split("\n");
+
+            if (section[0].startsWith("!")) {
+                break;
+            }
+
+            fullGuide.addAll(Arrays.asList(section));
+
+            if (section.length < 8) {
+                for (int blankLine = 8 - section.length; blankLine > 0; blankLine--) {
+                    fullGuide.add("");
+                }
+
+            }
+        }
+
+        return fullGuide;
     }
 }
